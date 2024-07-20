@@ -13,12 +13,6 @@ const nextConfig = {
       type: "webassembly/async",
     });
 
-    // Add a resolver for the WebAssembly module
-    config.resolve.alias["@/wasm"] = require("path").resolve(
-      __dirname,
-      "rust-lib/pkg"
-    );
-
     return config;
   },
 };

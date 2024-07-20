@@ -1,4 +1,4 @@
 {
-  "buildCommand": "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && source $HOME/.cargo/env && npm run build",
+  "buildCommand": "export RUSTUP_HOME=/tmp/.rustup && export CARGO_HOME=/tmp/.cargo && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && export PATH=/tmp/.cargo/bin:$PATH && npm run build",
   "installCommand": "npm install"
 }
