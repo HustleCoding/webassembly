@@ -11,7 +11,7 @@ const WasmDemo = () => {
   useEffect(() => {
     const loadWasm = async () => {
       try {
-        const wasm = await import("../../wasm/rust_lib");
+        const wasm = await import("@/rust-lib/pkg/rust_lib");
         await wasm.default();
         setWasmModule(wasm);
       } catch (err) {

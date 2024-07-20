@@ -6,9 +6,13 @@ const nextConfig = {
       asyncWebAssembly: true,
     };
 
-    config.output.webassemblyModuleFilename = isServer
-      ? "./../static/wasm/[modulehash].wasm"
-      : "static/wasm/[modulehash].wasm";
+    config.output.webassemblyModuleFilename = "static/wasm/[modulehash].wasm";
+
+    // Add a rule to handle Wasm files
+    config.module.rules.push({
+      test: /\.wasm$/,
+      type: "webassembly/async",
+    });
 
     return config;
   },
