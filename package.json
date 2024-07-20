@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "cd rust-lib && wasm-pack build --target web && cd ..",
+    "prebuild": "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && source $HOME/.cargo/env && cargo install wasm-pack && cd rust-lib && wasm-pack build --target web && cd .. && mkdir -p public/wasm && cp rust-lib/pkg/*.wasm public/wasm/",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

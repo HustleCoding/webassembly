@@ -3,17 +3,22 @@
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 
+interface WasmModule {
+  add: (a: number, b: number) => number;
+  fibonacci: (n: number) => number;
+}
+
 const WasmDemo = () => {
-  const [wasmModule, setWasmModule] = useState<any>(null);
+  const [wasmModule, setWasmModule] = useState<WasmModule | null>(null);
   const [sum, setSum] = useState<number | null>(null);
   const [fibResult, setFibResult] = useState<number | null>(null);
 
   useEffect(() => {
     const loadWasm = async () => {
       try {
-        const wasm = await import("@/rust-lib/pkg/rust_lib");
-        await wasm.default();
-        setWasmModule(wasm);
+        const wasmModule = await import("@/wasm/rust_lib");
+        await wasmModule.default();
+        setWasmModule(wasmModule as unknown as WasmModule);
       } catch (err) {
         console.error("Failed to load WASM module", err);
       }
