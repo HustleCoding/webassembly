@@ -3,22 +3,21 @@
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 
-interface WasmModule {
-  add: (a: number, b: number) => number;
-  fibonacci: (n: number) => number;
-}
-
 const WasmDemo = () => {
-  const [wasmModule, setWasmModule] = useState<WasmModule | null>(null);
+  const [wasmModule, setWasmModule] = useState<
+    typeof import("@/wasm/rust_lib") | null
+  >(null);
   const [sum, setSum] = useState<number | null>(null);
   const [fibResult, setFibResult] = useState<number | null>(null);
 
   useEffect(() => {
     const loadWasm = async () => {
       try {
-        const wasmModule = await import("@/wasm/rust_lib");
+        const wasmModule = await import("../../rust-lib/pkg/rust_lib");
         await wasmModule.default();
-        setWasmModule(wasmModule as unknown as WasmModule);
+        setWasmModule(
+          wasmModule as unknown as typeof import("@/wasm/rust_lib")
+        );
       } catch (err) {
         console.error("Failed to load WASM module", err);
       }
@@ -42,12 +41,22 @@ const WasmDemo = () => {
   };
 
   return (
-    <div>
-      <h1>WebAssembly Demo</h1>
-      <button onClick={handleAdd}>Add 5 + 3</button>
-      {sum !== null && <p>Sum: {sum}</p>}
-      <button onClick={handleFibonacci}>Calculate Fibonacci(10)</button>
-      {fibResult !== null && <p>Fibonacci(10): {fibResult}</p>}
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-4">WebAssembly Demo</h1>
+      <button
+        className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+        onClick={handleAdd}
+      >
+        Add 5 + 3
+      </button>
+      {sum !== null && <p className="mt-2">Sum: {sum}</p>}
+      <button
+        className="bg-green-500 text-white px-4 py-2 rounded"
+        onClick={handleFibonacci}
+      >
+        Calculate Fibonacci(10)
+      </button>
+      {fibResult !== null && <p className="mt-2">Fibonacci(10): {fibResult}</p>}
     </div>
   );
 };
