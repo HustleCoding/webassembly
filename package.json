@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "prebuild": "export PATH=/tmp/.cargo/bin:$PATH && cargo install wasm-pack && cd rust-lib && wasm-pack build --target web && cd .. && mkdir -p public/wasm && cp rust-lib/pkg/*.wasm public/wasm/",
-    "build": "next build",
+    "build": "npm run build",
     "start": "next start",
     "lint": "next lint"
   },
